@@ -1,0 +1,457 @@
+### START FILTERS ###
+
+    # Keyword Filter
+    body+title (includes-word): [
+        "incel",
+        "neckbeard",
+        "cancer",
+        "strawman",
+        "asshole",
+        "shill",
+        "gay",
+        "shilling",
+        "mod",
+        "mods",
+        "moderator",
+        "moderators",
+        "trap",
+        "traps",
+    ]
+    parent_submission:
+        ~id: 6ft4y8
+    action: filter
+    action_reason: "{{match}}"
+    
+---
+author:
+    name (includes): 'objective'
+action: report
+action_reason: 'Username contains objective, might be throw away'
+
+---
+
+    
+    # Lyna - We've gottan a few reports from the owner of the studio of fresh discord accounts impersonating /r/mmorpg mods and there is
+    #        a concerning spike of people claiming it's a fork of TFS despite the owner saying it isn't. Neither side has been proven this 
+    #        so this is mostly an early warning. Please forgive my shitty attempt at this for I am new and did this over about 10 minutes
+    # Keyword Report
+    type: any
+    body (includes-word): [
+        "fork of TFS",
+        "fork of opentibia",
+        "open tibia is",
+        "Ravendawn is a",
+        "Ravendawn was a",
+        "OpenTibia",
+        "open tibia",
+        "TFS",
+    ]
+    action: report
+    action_reason: "Potential spreading of misinformation regarding Ravendawn"
+   
+
+---
+
+    # Automatically remove any comment that gets 2+ reports
+    reports: 2
+    action: filter
+    action_reason: Report Limit
+    
+
+---
+    title+media_title (regex): ['(10|\d+\b(?<!covid.19)|five|four|one|seven|simple|six|three|two) ((\w+ )?(?-i:Ways)|easy|best|free|main|money|reasons?|steps)', '([5-9]|\d\d+|five|seven|simple|six) (\w+ )?ways', '(\d+|five|four|one|only|pro|seven|simple|six|this|three|two|weird)(\W[\w\x27-]{3,})?\W((pro\W?)?tips|things? (every\w*|one|only|you\w*)|trick)s?', '(photos|pictures|images) that prove', '\d{1,2} (signs|reasons) (you(\W?re)?|why)', '\d{1,2} dogs who', '\d{1,2} most important', '\d{1,2} things that', 'are the most', 'before you die', 'blow your mind', 'character are you', 'd(id|o)n\W?t know about', 'game of thrones', 'in real life', 'in your life', 'is this the', 'probably d(id|o)n\W?t know', 'reasons you should', 'things that (actually |really )?happen(ed)?', 'things you d(id|o)n\W?t', 'things you probably', 'will blow your', 'you probably d(id|o)n\W?t', 'you should be']
+    action: report
+    action_reason: "Possible clickbait [{{match}}]"
+
+---
+    #Filter anything mentioning ashes of creation by accounts less than 1 day old
+    type: any
+    author:
+        account_age: "< 5"
+    body+title (includes): ['Ashes of Creation', 'Ashes', 'Creation']
+    action: filter
+    action_reason: "Ashes of Creation smurf filter"
+    
+---
+    #LFMMO filter
+
+
+     #Auto-Remove LF MMO Posts
+     type: submission
+     title (includes-word): ["MMO with best","mmorpg with best","which mmo","which mmorpg","which game","Mmorpg recommendation","any mmo","whats a good mmo", "whats a good mmorpg","what are some good","what to play","f2p mmo?","help me choose","LF MMO", "LFMMO", "looking for a", "looking for an", "looking for mmo", "looking for mmorpg", "LF", "recommend", "mmorpg to play", "mmo to play", "game where", "games where", "any good", "suggest a", "need an mmo", "need a mmorpg", "need an mmo", "need mmo", "need mmorpg", "need a new", "Suggest me", "suggest an", "best mmo", "best mmorpg", "vs", "suggest", "What has", "Help me", "An MMORPG with", "An MMO with", "Any MMOs with", "Any MMO", "An MMO", "help me", "Thoughts on", "help", "finding", "think", "similar","or", "mmos with", "mmo's with", "any", "free", "like", "play", "what", "vs", "versus", "should", "need", "find", "compare", "compared", "How is", "have", "shot", "that I", "into", "first", "are","is", "and", "for", "good", "game", "suggestion","suggest","I want", "want"]
+     action: filter
+     action_reason: LF MMO Post
+     message: |
+        The post you recently made on /r/MMORPG was automatically flagged for review. Automoderator suspects it's a post where you ask for an MMORPG suggestion which is against the rules. 
+        A moderator will review the post, if your post was in fact LFMMO it will remain deleted. If not it will be approved. If you are looking for suggestions we have a weekly sticky for looking for MMO.
+        And you can also visit /r/LFMMO for more in depth questions. 
+        
+        No further action is needed. 
+        
+        *beep boop*
+        ---
+        
+---
+
+    author:
+        comment_karma: "< -50"
+    action: remove
+    action_reason: "Low karma user"
+---
+
+    body+title (regex, includes): ['\[\s*(?:https?://)?(([\w-]{1,64}\.)+[a-z][\w-]{1,63}(?=[\s#&/?\]]))[^\]]*\]\x28\s*https?://(?!((en|home|np|www)\.)?\2[\s#&\x29/?]|[\w.-]+\.gov/|www\.google\.com/url\?\S*\2)[^\x29]*\x29']
+    action: filter
+    action_reason: "Possible disguised link, please review [{{match}}]"
+---
+
+### END FILTERS ###
+
+### START SPAM ###
+
+    #r4pg.com anti spam attempt
+    domain+body+title+media_description: [r4pg.com]
+    type: submission
+    action: spam
+    comment: |
+        This post was automatically removed because you linked to a gold seller.
+        Please stop.
+        
+        *beep boop*
+
+        ---
+---
+
+    # Domain blacklist
+    domain+body+title: [discordapp.com, discord.me, 4game.com, 4ga.me, discord.gg, lineage2classic.com, yourmmolist.org, mmosite.com,u7buy.com, monstermmorpg.com, upitems.com, wildstarplatinum.us, sellarcheagegold.com, browsergameshq.com, archeage4gold.com, stumbleupon.com, vgoldseller.com, itemstores.com, esogoldstore.com, raptr.com, esogoldah.com, pathofexileitems.us, archeagegold.us, gamingtop100.net,neverwinter.offernet.info,offernet.info,hightechbrain.com,bestpcgamer.com,bestreamer.com,veryaligaming.com]
+    action_reason: Domain Blacklist
+    action: spam
+
+---
+     ##Humble Bundle ref removal
+    url (regex): ['(humblebundle.com).*[?&](refc)=.+?(&|\b)']
+    action: remove
+    action_reason: Some Shitty Ref Bullshit from Humblebundle
+    comment: |
+      Your post has removed because you are linking ref links from Humblebundle and that's not cool since it's breaking our rules.
+      
+---
+      
+    body (regex): ['(humblebundle.com).*[?&](refc)=.+?(&|\b)']
+    action: filter
+    action_reason: Reflink from humblebundle, check the thread to delete it since this only catches the twitter transcriber bot in transcribing from twitter.
+    comment: |
+      Your post has removed because you are linking ref links from Humblebundle and that's not cool since it's breaking our rules.
+
+---
+    
+    # FUCK TIDAL
+    type: any
+    body: "Tidal"
+    action: filter
+    action_reason: Fucking Tidal some shit tier albion guild spamming our shit. REEEEEEE
+    
+    
+---
+
+    #FUCK THYNDERSPYGAMING
+    type: any
+    body: "Thunderspy"
+    action: filter
+    action_reason: Fucking Thunderspygaming being dipshit assholes to our mods cause their shit ad didn't work out.  REEEEEEE
+
+
+---
+
+### END SPAM ###
+
+### START REMOVE ###
+
+    # Automatically remove anything that gets 4+ reports and send modmail
+    reports: 4
+    action: remove
+    action_reason: Report Limit
+    modmail: The above item was automatically removed due to receiving 3+ reports. Please verify that this action was correct. *Beep Boop*.
+
+---
+
+    # Auto remove youtube posts from a non-approved site
+    ~media_author_url (full-exact): [
+      "https://www.youtube.com/channel/UC6SmH9mR82nj28_NNg_rZvA",
+      "https://www.youtube.com/channel/UCvZHe-SP3xC7DdOk4Ri8QBw",
+      "https://www.youtube.com/channel/UCbLj9QP9FAaHs_647QckGtg",
+      "https://www.youtube.com/user/arenanetofficial",
+      "https://www.youtube.com/user/blizzard",
+      "https://www.youtube.com/channel/UCbLj9QP9FAaHs_647QckGtg",
+      "https://www.youtube.com/user/ArcheAgeTrion",
+      "https://www.youtube.com/user/DefianceUniverse",
+      "https://www.youtube.com/user/RiftMMO",
+      "https://www.youtube.com/user/TroveGame",
+      "https://www.youtube.com/user/NexonEuropeSARL",
+      "https://www.youtube.com/user/NXJofficial",
+      "https://www.youtube.com/user/MapleStory",
+      "https://www.youtube.com/user/AtlanticaOnline",
+      "https://www.youtube.com/user/dragonnestonline",
+      "https://www.youtube.com/user/Mabinogi",
+      "https://www.youtube.com/user/plaync",
+      "https://www.youtube.com/channel/UCWGs7lFiEdbThvEW4LogTTw",
+      "https://www.youtube.com/user/runescape",
+      "https://www.youtube.com/user/albiononlineofficial",
+      "https://www.youtube.com/channel/UCcO-TjLkDNzvYrlPkOHgnfA",
+      "https://www.youtube.com/channel/UCa7jRzCTpW2NCh4FK11y9jQ",
+      "https://www.youtube.com/channel/UCHVjXO-WdYHUIdxC8buCkzQ",
+      "https://www.youtube.com/channel/UC4mV4omijEEhZG3XpFhSh8g",
+      "https://www.youtube.com/user/ZenimaxOnlineStudios",
+      "https://www.youtube.com/channel/UCwF3VyalTHzL0L-GDlwtbRw",
+      "https://www.youtube.com/user/FINALFANTASYXIV",
+      "https://www.youtube.com/channel/UC4MbaiykerIrjKWRA6407tQ",
+      "https://www.youtube.com/user/OfficialSkyforge",
+      "https://www.youtube.com/user/swtheoldrepublic",
+      "https://www.youtube.com/user/RobertsSpaceInd",
+      "https://www.youtube.com/user/enmasseentertainment",
+      "https://www.youtube.com/user/lordoftherings",
+      "https://www.youtube.com/user/Funcom",
+      "https://www.youtube.com/user/Wakfu",
+      "https://www.youtube.com/user/WildStarOnline",
+      "https://www.youtube.com/user/dofus",
+      "https://www.youtube.com/channel/UCNxtpPPwlMhU6ILPUSZRFhA",
+      "https://www.youtube.com/channel/UCgAiibAWr-onnKQEoYz83Aw",
+      "https://www.youtube.com/user/Bobikvvp",
+      "https://www.youtube.com/channel/UCFtNX8lJFjYuweDo-GekCHg",
+      "https://www.youtube.com/channel/UCikCbHcVu3GAWsWhYOs7FKA",
+      "https://www.youtube.com/channel/UCfbi2EvzQmIJ55TJvZumNZw",
+      "https://www.youtube.com/channel/UCfbi2EvzQmIJ55TJvZumNZw",
+      "https://www.youtube.com/user/PlayparkTV",
+      "https://www.youtube.com/channel/UCsIghHd1VyG2TEjIKCRU2gw",
+      "https://www.youtube.com/channel/UCP68j3QHCe88JkBe0ATdbrw",
+      "https://www.youtube.com/channel/UCj2hiSQeR13FeI3lIxCvbmA", 
+      "https://www.youtube.com/channel/UCcZo9VRa3TFIJaf1aJOLDgw", #Black Desert Online
+      "https://www.youtube.com/channel/UC9gij-VpDFWaaqn1zLM4TEQ", #Albion Online 
+      "https://www.youtube.com/user/CremaGames",
+      "https://www.youtube.com/channel/UCpx2BZg8ABgaDV50sGJtWAg",
+      "https://www.reddit.com", 
+      "https://www.youtube.com/channel/UCz2cF4XSOaTbUatK9jxRTMw", #RavenDawn
+      "https://www.youtube.com/channel/UCSLYSDLpSNmZP-1cjNQu6hw", #New World
+      "https://www.youtube.com/@TowerofFantasy"
+    ]
+    action: remove
+    action_reason: Youtube Direct Linking
+    comment: |
+      Your post has been removed because Rule 3: No Direct linking of youtube videos from unofficial sources.
+ 
+      To avoid further our anti-spam/self-promotion efforts we currently do not allow videos on our page from sources other than developers or news sources.
+
+      You are allowed to post youtube videos in a text post as long as you accompany it with a description of the contents of the video so that people can participate in the discussion without having to watch the video.
+
+      Click [here](https://www.reddit.com/r/MMORPG/about/rules) to read about all our rules.
+
+      If this was a mistake, please message the mods and they will approve the post. Sorry for the inconvenience!
+        
+      *beep boop*
+
+      ---
+---      
+          # Keyword remover
+          #For when the words are just too vile to be seen by the eyes of our precious moderators <3
+          #Or just topics/people we want to avoid
+    body+title (includes): [
+        "cunt",
+        "loli",
+        "nigger",
+        "nigga",
+        "níbbers",
+        "nibber",
+        "nibbers",
+        "nibba",
+        "fag",
+        "faggot",
+        "New Malton Guerrilla Movement",
+        "Urban Dead",
+        "D3CDTKs",
+        "/r/MMOVW",
+        "MMOVW",
+        "discord.gg",
+        "discordapp.com",
+        "discord.com",
+        "discord.me",
+        "Phoenix",
+        "https://playphoenix.online/",
+        "Occupy White Walls",
+        "OWW",
+        "The eternal war",
+        "www.legioneternalwar.com",
+        "chink",
+        "rulers of the sea",
+        "www.rulersofthesea.com",
+        "LazyPeon",
+        "Lazy Peon",
+        "Pivotal",
+        "Pivotalgamers",
+        "autistic",
+        "tranny",
+        "autist",
+        "autism",
+        "truewow",
+        "WildyPK",
+        "Wildy PK",
+        "OceaniaClassic.com",
+        "Oceania Classic"
+    ]
+    parent_submission:
+        ~id: 6ft4y8
+    action: remove
+    action_reason: "{{match}}"
+        
+        
+---
+body(regex): ['(n|i){1,32}((g{2,32}|qb){1,32}|[gqb]{2,32})[e3ra]{1,32}']
+action: remove
+action_reason: n-word filter "{{match}}"
+---
+    # Smurf Filter - Comments
+    type: any
+    author:
+        account_age: < 1 week
+        link_karma: < 50
+        comment_karma: < 50
+    action: remove
+    action_reason: "removed because smurf"
+---
+    # FUCK REFERRALS
+    type: any
+    body: "https://www.ashesofcreation.com/ref/"
+    action: remove
+    action_reason: Fucking referrals
+    
+    
+---
+    
+    # FUCK REFERRALS
+    type: any
+    body: "http://www.darkfallriseofagon.com/referrals/"
+    action: remove
+    action_reason: Fucking referrals
+    
+    
+---
+    # Message Mods whenever totesmessenger bot makes an apperance
+    author: [TotesMessenger, Totes_Meta_Bot]
+    body (regex): "\\[/r/(\\w+)\\] \\[(.+)\\]\\(http://np\\.(reddit\\.com/\\S+)\\b/\\)"
+    action: remove
+
+---
+
+#Skilliard4 posting his darn blogs as self posts.
+    author: "skilliard4"
+    domain: "deliddedtech.com"
+    action: remove
+    comment: |
+        Removed, rule #2.
+        
+        Please do not direct link to your own content. Posting your own content must be in the form of a self post. Please see the examples linked under the "Allowed Submissions" section in the sidebar.
+        
+        Thanks!
+    
+---
+
+
+### END REMOVE ###
+
+### START AUTO FLAIR ###
+
+    # Auto-Flair LFG posts
+    type: submission
+    title (includes-word): "[LFG]"
+    set_flair: ["Looking For Group", "discussion"]
+
+---
+
+    # Auto-Flair News posts
+    type: submission
+    title (includes-word): "[News]"
+    set_flair: ["News", "news"]
+
+---
+
+    # Auto-Flair Discussion posts
+    type: submission
+    title (includes-word): "[Discussion]"
+    set_flair: ["Discussion", "discussion"]
+
+---
+
+    # Auto-Flair Preview posts
+    type: submission
+    title (includes-word): "[Preview]"
+    set_flair: ["Preview", "review"]
+
+---
+
+    # Auto-Flair Preview posts
+    type: submission
+    title (includes-word): "[Review]"
+    set_flair: ["Review", "review"]
+
+---
+
+    # Auto-Flair Preview posts
+    type: submission
+    title (includes-word): "MMO Blog Round-Up"
+    set_flair: ["Blog Round-Up", "discussion"]
+
+---
+
+    # Out of Character Flair
+    type: submission
+    title (includes-word): "[META]"
+    set_flair: ["Out of Character", "meta"]
+    
+---
+    
+
+    # Flair Mechanics Mondays Threads
+    author: "Fizzster"
+    title (includes): "Monday Mechanics"
+    set_flair: ["Mechanics" , "discussion"]
+
+---
+
+    # Flair Game Discussion Threads
+    author: "Automoderator"
+    title (includes): "Game Discussion"
+    set_flair: ["Game Discussion" , "discussion"]
+
+---
+
+### END AUTO FALIR ###
+
+### START AUTO APPROVE ###
+
+    # Approve all comments
+    type: comment
+    action: approve
+
+---
+
+    type: any
+    author: SOLO_Team
+    action: approve
+
+
+---
+    type: any
+    author: PixadomMMORPG
+    action: approve
+    
+### END AUTO APPROVE ###
+
+### WEEKLY LFMMO ###
+    
+    # Set weekly lf mmo thread to new sort
+    author: AutoModerator
+    title (includes): "Weekly Looking for MMO thread"
+    set_suggested_sort: "new"
+    
+---
+
+### END WEEKLY LFMMO ###
+
