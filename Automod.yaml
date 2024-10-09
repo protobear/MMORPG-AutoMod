@@ -152,6 +152,15 @@ action_reason: 'Username contains objective, might be throw away'
     
     
 ---
+    
+    # Reign of Guilds Spam
+    type: any
+    body: "Reign of Guilds"
+    action: remove
+    action_reason: Reign of Guilds Spam
+        
+    
+---
 
     #FUCK THYNDERSPYGAMING
     type: any
@@ -294,7 +303,14 @@ action_reason: 'Username contains objective, might be throw away'
         "WildyPK",
         "Wildy PK",
         "OceaniaClassic.com",
-        "Oceania Classic"
+        "Oceania Classic",
+        "Reign of Guilds",
+        "Reign of Guild",
+        "AtlantGames",
+        "Atlant Games",
+        "store.steampowered.com/app/716350/Reign_of_Guilds/",
+        "reignofguilds"
+        
     ]
     parent_submission:
         ~id: 6ft4y8
@@ -454,4 +470,3 @@ action_reason: n-word filter "{{match}}"
 ---
 
 ### END WEEKLY LFMMO ###
-
